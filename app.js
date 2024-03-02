@@ -4,6 +4,18 @@ var port = process.env.PORT || 3000,
     html = fs.readFileSync('index.html');
 
 var server = http.createServer(function (req, res) {
+    if (req.url === '/json') {
+        res.writeHead(200, {'Content-Type': 'application/json'});
+        res.write(
+            JSON.stringify(
+                {
+                    name: process.env.USERNAME || 'unknown', 
+                    age: process.env.AGE || 'unknown'
+                })
+        );
+        res.end();
+        return;
+    }
     res.writeHead(200);
     res.write(html);
     res.end();
